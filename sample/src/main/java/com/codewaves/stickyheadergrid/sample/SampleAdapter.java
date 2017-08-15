@@ -15,15 +15,12 @@ import java.util.List;
 public class SampleAdapter extends StickyHeaderGridAdapter {
    private List<List<String>> labels;
 
-   SampleAdapter(int sections, int count) {
-      labels = new ArrayList<>(sections);
-      for (int s = 0; s < sections; ++s) {
-         List<String> labels = new ArrayList<>(count++);
-         for (int i = 0; i < count; ++i) {
+   SampleAdapter(List<Integer> data) {
+      labels = new ArrayList<>(data.size());
+      for (int s = 0; s < data.size(); ++s) {
+         List<String> labels = new ArrayList<>(data.get(s));
+         for (int i = 0; i < data.get(s); ++i) {
             String label = "Item " + String.valueOf(i);
-            /*for (int p = 0; p < s - i; ++p) {
-               label += "*\n";
-            }*/
             labels.add(label);
          }
          this.labels.add(labels);
@@ -56,7 +53,7 @@ public class SampleAdapter extends StickyHeaderGridAdapter {
    public void onBindHeaderViewHolder(HeaderViewHolder viewHolder, int section) {
       final MyHeaderViewHolder holder = (MyHeaderViewHolder)viewHolder;
       final String label = "Header Number Example Added " + section;
-//      holder.labelView.setText(label);
+      holder.labelView.setText(label);
    }
 
    @Override
@@ -82,7 +79,7 @@ public class SampleAdapter extends StickyHeaderGridAdapter {
 
       MyHeaderViewHolder(View itemView) {
          super(itemView);
-//         labelView = (TextView) itemView.findViewById(R.id.label);
+         labelView = (TextView) itemView.findViewById(R.id.label);
       }
    }
 

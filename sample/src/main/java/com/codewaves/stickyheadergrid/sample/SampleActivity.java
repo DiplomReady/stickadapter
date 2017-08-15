@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import com.codewaves.sample.R;
 import com.codewaves.stickyheadergrid.StickyHeaderGridLayoutManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SampleActivity extends AppCompatActivity {
    private static final int SPAN_SIZE = 1;
    private static final int SECTIONS = 13;
@@ -56,7 +59,18 @@ public class SampleActivity extends AppCompatActivity {
          }
       });
       mRecycler.setLayoutManager(mLayoutManager);
-      mRecycler.setAdapter(new SampleAdapter(SECTIONS, SECTION_ITEMS));
+      List<Integer> dataForHeader = new ArrayList<>();
+      dataForHeader.add(2);
+      dataForHeader.add(3);
+      dataForHeader.add(1);
+      dataForHeader.add(5);
+      dataForHeader.add(3);
+      dataForHeader.add(2);
+      dataForHeader.add(3);
+      dataForHeader.add(1);
+      dataForHeader.add(4);
+      dataForHeader.add(1);
+      mRecycler.setAdapter(new SampleAdapter(dataForHeader));
    }
 
    @Override

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_marginLeft="200dp"
+    android:background="@android:color/black"
     android:orientation="vertical"
     android:padding="@dimen/item_padding">
 
@@ -12,13 +13,17 @@
         android:layout_marginLeft="200dp"
         android:orientation="horizontal">
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/image_label"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:mipmap/sym_def_app_icon"
-            android:padding="@dimen/label_padding"
-            android:textColor="@android:color/black" />
+            android:padding="@dimen/label_padding" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,14 +35,14 @@
                 android:id="@+id/label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="description"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
 
 
         </LinearLayout>
@@ -47,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="200dp"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@android:color/darker_gray" />
 
 
 </LinearLayout>

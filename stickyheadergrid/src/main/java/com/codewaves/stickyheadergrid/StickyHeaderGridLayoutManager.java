@@ -812,8 +812,7 @@ public class StickyHeaderGridLayoutManager extends RecyclerView.LayoutManager im
                         addRow(recycler, state, false, adapterPosition, (headerRow != null && headerRow.bottom > bottomRow.bottom) ? headerRow.bottom : bottomRow.bottom);
 
                         // TODO: 8/15/2017
-                        addRow(recycler, state, false, adapterPosition + 1, (headerRow != null && headerRow.bottom > bottomRow.bottom) ? headerRow.bottom : bottomRow.bottom);
-                        addRow(recycler, state, false, adapterPosition + 2, getBottomRow().bottom);
+                        addAAddishionalRows(recycler, state, bottomRow, adapterPosition, headerRow);
 //                        addRow(recycler, state, false, adapterPosition + 3, getBottomRow().bottom);
                     }
                 } else {
@@ -890,6 +889,18 @@ public class StickyHeaderGridLayoutManager extends RecyclerView.LayoutManager im
         return scrolled;
     }
 
+    private void addAAddishionalRows(RecyclerView.Recycler recycler, RecyclerView.State state, LayoutRow bottomRow, int adapterPosition, LayoutRow headerRow) {
+
+        // TODO: 8/15/2017  
+        if (getTopRow().header)
+            
+            if (mAdapter.getItemCount() > adapterPosition + 1) {
+                addRow(recycler, state, false, adapterPosition + 1, (headerRow != null && headerRow.bottom > bottomRow.bottom) ? headerRow.bottom : bottomRow.bottom);
+            } if (mAdapter.getItemCount() > adapterPosition + 2) {
+                addRow(recycler, state, false, adapterPosition + 2, getBottomRow().bottom);
+            }
+
+    }
 
 
     private int getTopOffset(int itemCount, int height) {
