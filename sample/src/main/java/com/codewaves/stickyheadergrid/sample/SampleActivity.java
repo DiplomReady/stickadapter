@@ -59,15 +59,17 @@ public class SampleActivity extends AppCompatActivity {
          }
       });
       mRecycler.setLayoutManager(mLayoutManager);
+//      mRecycler.addItemDecoration(new DividerItemDecoration(this, R.drawable.divider));
+
       List<Integer> dataForHeader = new ArrayList<>();
       dataForHeader.add(2);
-      dataForHeader.add(3);
+      dataForHeader.add(6);
       dataForHeader.add(1);
       dataForHeader.add(5);
-      dataForHeader.add(3);
+      dataForHeader.add(6);
       dataForHeader.add(2);
       dataForHeader.add(3);
-      dataForHeader.add(1);
+      dataForHeader.add(9);
       dataForHeader.add(4);
       dataForHeader.add(1);
       mRecycler.setAdapter(new SampleAdapter(dataForHeader));

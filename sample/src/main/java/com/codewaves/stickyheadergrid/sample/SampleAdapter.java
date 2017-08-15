@@ -52,7 +52,7 @@ public class SampleAdapter extends StickyHeaderGridAdapter {
    @Override
    public void onBindHeaderViewHolder(HeaderViewHolder viewHolder, int section) {
       final MyHeaderViewHolder holder = (MyHeaderViewHolder)viewHolder;
-      final String label = "Header Number Example Added " + section;
+      final String label = "Header Number " + section;
       holder.labelView.setText(label);
    }
 
