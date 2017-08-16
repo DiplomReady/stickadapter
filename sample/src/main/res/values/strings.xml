@@ -1,5 +1,5 @@
 <resources>
-   <string name="app_name">StickyHeaderGrid</string>
+   <string name="app_name">StickyHeader</string>
 
    <string name="action_top">Top</string>
    <string name="action_bottom">Bottom</string>
