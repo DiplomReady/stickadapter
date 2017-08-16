@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/black"
     tools:context="com.codewaves.stickyheadergrid.sample.SampleActivity">
 
     <LinearLayout
@@ -36,7 +37,7 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
+
         android:scrollbars="vertical" />
 
 </LinearLayout>

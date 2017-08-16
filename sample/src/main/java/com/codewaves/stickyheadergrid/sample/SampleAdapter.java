@@ -7,12 +7,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codewaves.sample.R;
-import com.codewaves.stickyheadergrid.StickyHeaderGridAdapter;
+import com.codewaves.stickyheadergrid.StickyHeaderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SampleAdapter extends StickyHeaderGridAdapter {
+public class SampleAdapter extends StickyHeaderAdapter {
    private List<List<String>> labels;
 
    SampleAdapter(List<Integer> data) {

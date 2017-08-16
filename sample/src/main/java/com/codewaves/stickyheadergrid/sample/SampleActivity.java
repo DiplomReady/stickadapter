@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codewaves.sample.R;
-import com.codewaves.stickyheadergrid.StickyHeaderGridLayoutManager;
+import com.codewaves.stickyheadergrid.StickyHeaderLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class SampleActivity extends AppCompatActivity {
    private static final int SECTION_ITEMS = 1;
 
    private RecyclerView mRecycler;
-   private StickyHeaderGridLayoutManager mLayoutManager;
+   private StickyHeaderLayoutManager mLayoutManager;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +28,9 @@ public class SampleActivity extends AppCompatActivity {
 
       // Setup recycler
       mRecycler = (RecyclerView)findViewById(R.id.recycler);
-      mLayoutManager = new StickyHeaderGridLayoutManager(SPAN_SIZE);
+      mLayoutManager = new StickyHeaderLayoutManager(SPAN_SIZE);
       mLayoutManager.setHeaderBottomOverlapMargin(getResources().getDimensionPixelSize(R.dimen.header_shadow_size));
-      mLayoutManager.setSpanSizeLookup(new StickyHeaderGridLayoutManager.SpanSizeLookup() {
+      mLayoutManager.setSpanSizeLookup(new StickyHeaderLayoutManager.SpanSizeLookup() {
          @Override
          public int getSpanSize(int section, int position) {
             switch (section) {

@@ -3,22 +3,22 @@ apply from: '../dependencies.gradle'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'sticky-header-grid'
+    bintrayName = 'sticky-header'
 
-    publishedGroupId = 'com.codewaves.stickyheadergrid'
-    libraryName = 'Sticky-Header-Grid'
+    publishedGroupId = 'com.codewaves.stickyheader'
+    libraryName = 'Sticky-Header'
     artifact = 'stickyheadergrid'
 
-    libraryDescription = 'Sticky header grid layout manager for RecycleView'
+    libraryDescription = 'Sticky header layout manager for RecycleView'
 
-    siteUrl = 'https://github.com/Codewaves/Sticky-Header-Grid'
-    gitUrl = 'https://github.com/Codewaves/Sticky-Header-Grid.git'
+    siteUrl = ''
+    gitUrl = ''
 
     libraryVersion = versions.publishVersion
 
-    developerId = 'codewaves'
-    developerName = 'Sergej Kravcenko'
-    developerEmail = 'skravcenko@codewaves.com'
+    developerId = ''
+    developerName = ''
+    developerEmail = ''
 
     licenseName = 'The MIT License'
     licenseUrl = 'https://opensource.org/licenses/mit-license.php'
