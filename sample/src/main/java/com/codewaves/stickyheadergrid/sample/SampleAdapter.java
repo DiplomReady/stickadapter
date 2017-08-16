@@ -1,8 +1,11 @@
 package com.codewaves.stickyheadergrid.sample;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,85 +13,194 @@ import com.codewaves.sample.R;
 import com.codewaves.stickyheadergrid.StickyHeaderAdapter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SampleAdapter extends StickyHeaderAdapter {
-   private List<List<String>> labels;
+    private List<TvSection> tvItemSSections;
+    private boolean editMode;
 
-   SampleAdapter(List<Integer> data) {
-      labels = new ArrayList<>(data.size());
-      for (int s = 0; s < data.size(); ++s) {
-         List<String> labels = new ArrayList<>(data.get(s));
-         for (int i = 0; i < data.get(s); ++i) {
-            String label = "Item " + String.valueOf(i);
-            labels.add(label);
-         }
-         this.labels.add(labels);
-      }
-   }
+    SampleAdapter(List<TvSection> data) {
+        addItemsToSection(data);
+    }
 
-   @Override
-   public int getSectionCount() {
-      return labels.size();
-   }
+    private void addItemsToSection(List<TvSection> data) {
 
-   @Override
-   public int getSectionItemCount(int section) {
-      return labels.get(section).size();
-   }
+        /*for (Iterator<TvItem> tvItem = data.iterator(); tvItem.hasNext(); ) {
 
-   @Override
-   public HeaderViewHolder onCreateHeaderViewHolder(ViewGroup parent, int headerType) {
-      final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_header, parent, false);
-      return new MyHeaderViewHolder(view);
-   }
+            TvItem nextItem = tvItem.next();
+            if (nextItem.isNeedsDelete()) {
+                tvItem.remove();
+            }
 
-   @Override
-   public ItemViewHolder onCreateItemViewHolder(ViewGroup parent, int itemType) {
-      final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_item, parent, false);
-      return new MyItemViewHolder(view);
-   }
+        }*/
 
-   @Override
-   public void onBindHeaderViewHolder(HeaderViewHolder viewHolder, int section) {
-      final MyHeaderViewHolder holder = (MyHeaderViewHolder)viewHolder;
-      final String label = "Header Number " + section;
-      holder.labelView.setText(label);
-   }
+        tvItemSSections = new ArrayList<>(data.size());
 
-   @Override
-   public void onBindItemViewHolder(ItemViewHolder viewHolder, final int section, final int position) {
-      final MyItemViewHolder holder = (MyItemViewHolder)viewHolder;
-      final String label = labels.get(section).get(position);
-      holder.labelView.setText(label);
-      holder.labelView.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            final int section = getAdapterPositionSection(holder.getAdapterPosition());
-            final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
+        for (int s = 0; s < data.size(); ++s) {
+//            List<TvItem> tvItems = new ArrayList<>(data.get(s).getItemsCount());
+            for (int i = 0; i < data.get(s).getItemsCount(); ++i) {
+                for (TvItem tvItem : data.get(i).getTvItems()) {
+                    String label = "Item " + String.valueOf(i);
+                    tvItem.setTitle(label);
+//                    tvItems.add(tvItem);
+                }
+            }
+            this.tvItemSSections.addAll(data);
+        }
+    }
 
-            labels.get(section).remove(offset);
-            notifySectionItemRemoved(section, offset);
-            Toast.makeText(holder.labelView.getContext(), label, Toast.LENGTH_SHORT).show();
-         }
-      });
-   }
+    @Override
+    public int getSectionCount() {
+        return tvItemSSections.size();
+    }
 
-   public static class MyHeaderViewHolder extends HeaderViewHolder {
-      TextView labelView;
+    @Override
+    public int getSectionItemCount(int section) {
+        return tvItemSSections.get(section).getItemsCount();
+    }
 
-      MyHeaderViewHolder(View itemView) {
-         super(itemView);
-         labelView = (TextView) itemView.findViewById(R.id.label);
-      }
-   }
+    @Override
+    public HeaderViewHolder onCreateHeaderViewHolder(ViewGroup parent, int headerType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_header, parent, false);
+        return new MyHeaderViewHolder(view);
+    }
 
-   public static class MyItemViewHolder extends ItemViewHolder {
-      TextView labelView;
+    @Override
+    public ItemViewHolder onCreateItemViewHolder(ViewGroup parent, int itemType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_item, parent, false);
+        return new MyItemViewHolder(view);
+    }
 
-      MyItemViewHolder(View itemView) {
-         super(itemView);
-         labelView = (TextView) itemView.findViewById(R.id.label);
-      }
-   }
+    @Override
+    public void onBindHeaderViewHolder(HeaderViewHolder viewHolder, int section) {
+        final MyHeaderViewHolder holder = (MyHeaderViewHolder) viewHolder;
+        final String label = "Header Number " + section;
+        holder.labelView.setText(label);
+    }
+
+    @Override
+    public void onBindItemViewHolder(ItemViewHolder viewHolder, final int section, final int position) {
+        final MyItemViewHolder holder = (MyItemViewHolder) viewHolder;
+        final TvItem tvItem = tvItemSSections.get(section).getTvItems().get(position);
+        holder.labelView.setText(tvItem.getTitle());
+        holder.labelView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteItem(holder, tvItem);
+            }
+        });
+
+        holder.checkView.setVisibility(tvItem.isEditMode() ? View.VISIBLE : View.GONE);
+        holder.checkView.setChecked(tvItem.isSelected());
+        holder.checkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                tvItem.setSelected(isChecked);
+            }
+        });
+
+     /* if (tvItem.isNeedsDelete()) {
+         deleteItem(holder, tvItem);
+      }*/
+
+    }
+
+    private void deleteItem(MyItemViewHolder holder, TvItem tvItem) {
+        Log.i("***", "deleteItem: ");
+        final int section = getAdapterPositionSection(holder.getAdapterPosition());
+        final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
+
+        tvItemSSections.get(section).getTvItems().remove(offset);
+        notifySectionItemRemoved(section, offset);
+        Toast.makeText(holder.labelView.getContext(), tvItem.getTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    public void setEditMode(boolean editMode) {
+        for (TvSection tvItemSSection : tvItemSSections) {
+            for (TvItem tvItem : tvItemSSection.getTvItems()) {
+                tvItem.setEditMode(editMode);
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public void selectAllItems() {
+        for (TvSection tvItemSSection : tvItemSSections) {
+            for (TvItem tvItem : tvItemSSection.getTvItems()) {
+                tvItem.setSelected(true);
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public void deleteSelectedItems() {
+
+        List<TvSection> newTvSections = new ArrayList<>();
+
+        for (TvSection tvItemSSection : tvItemSSections) {
+
+            List<TvItem> newTvItems = new ArrayList<>();
+
+            for (TvItem tvItem : tvItemSSection.getTvItems()) {
+                tvItem.setNeedsDelete(tvItem.isSelected());
+                if (!tvItem.isNeedsDelete()) {
+                    newTvItems.add(tvItem);
+                }
+            }
+
+            if (!newTvItems.isEmpty()) {
+                TvSection newTvItemSSection = new TvSection(newTvItems);
+                newTvSections.add(newTvItemSSection);
+            }
+
+        }
+
+     /*  for (Iterator<List<TvItem>> tvItemSSection = tvItemSSections.iterator(); tvItemSSection.hasNext(); ) {
+
+           List<TvItem> tvItems = tvItemSSection.next();
+
+
+           for (Iterator<TvItem> tvItem = tvItems.iterator(); tvItem.hasNext(); ) {
+
+
+               TvItem nextItem = tvItem.next();
+               if (nextItem.isSelected()) {
+                   tvItems.remove(nextItem);
+               }
+
+               if (tvItems.isEmpty()) {
+                   tvItemSSections.remove(tvItems);
+                   break;
+               }
+               //           tvItem.setNeedsDelete(tvItem.isSelected());
+           }
+       }*/
+
+        addItemsToSection(newTvSections);
+        recalculateItems();
+        //       notifyDataSetChanged();
+    }
+
+    public static class MyHeaderViewHolder extends HeaderViewHolder {
+        TextView labelView;
+
+        MyHeaderViewHolder(View itemView) {
+            super(itemView);
+            labelView = (TextView) itemView.findViewById(R.id.label);
+        }
+    }
+
+    public static class MyItemViewHolder extends ItemViewHolder {
+        CheckBox checkView;
+        TextView labelView;
+
+        MyItemViewHolder(View itemView) {
+            super(itemView);
+            labelView = (TextView) itemView.findViewById(R.id.label);
+            checkView = (CheckBox) itemView.findViewById(R.id.check);
+        }
+    }
 }

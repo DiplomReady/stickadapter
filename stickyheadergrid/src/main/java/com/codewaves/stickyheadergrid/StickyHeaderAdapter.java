@@ -561,8 +561,7 @@ public abstract class StickyHeaderAdapter extends RecyclerView.Adapter<StickyHea
 
     public void notifySectionRemoved(int section) {
         if (mSections == null) {
-            calculateSections();
-            notifyAllSectionsDataSetChanged();
+            recalculateItems();
         } else {
             final Section sectionObject = mSections.get(section);
             calculateSections();
@@ -572,8 +571,7 @@ public abstract class StickyHeaderAdapter extends RecyclerView.Adapter<StickyHea
 
     public void notifySectionItemRemoved(int section, int position) {
         if (mSections == null) {
-            calculateSections();
-            notifyAllSectionsDataSetChanged();
+            recalculateItems();
         } else {
             final Section sectionObject = mSections.get(section);
 
@@ -586,10 +584,14 @@ public abstract class StickyHeaderAdapter extends RecyclerView.Adapter<StickyHea
         }
     }
 
+    public void recalculateItems() {
+        calculateSections();
+        notifyAllSectionsDataSetChanged();
+    }
+
     private void notifySectionItemRangeRemoved(int section, int position, int count) {
         if (mSections == null) {
-            calculateSections();
-            notifyAllSectionsDataSetChanged();
+            recalculateItems();
         } else {
             final Section sectionObject = mSections.get(section);
 

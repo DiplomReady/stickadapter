@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.codewaves.sample.R;
 import com.codewaves.stickyheadergrid.StickyHeaderLayoutManager;
@@ -61,18 +62,48 @@ public class SampleActivity extends AppCompatActivity {
       mRecycler.setLayoutManager(mLayoutManager);
 //      mRecycler.addItemDecoration(new DividerItemDecoration(this, R.drawable.divider));
 
-      List<Integer> dataForHeader = new ArrayList<>();
-      dataForHeader.add(2);
-      dataForHeader.add(6);
-      dataForHeader.add(1);
-      dataForHeader.add(5);
-      dataForHeader.add(6);
-      dataForHeader.add(2);
-      dataForHeader.add(3);
-      dataForHeader.add(9);
-      dataForHeader.add(4);
-      dataForHeader.add(1);
-      mRecycler.setAdapter(new SampleAdapter(dataForHeader));
+      List<TvSection> dataForHeader = new ArrayList<>();
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(2)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(6)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(1)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(2)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(5)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(1)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(3)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(9)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(4)));
+      dataForHeader.add(new TvSection(new ArrayList<TvItem>(1)));
+      final SampleAdapter adapter = new SampleAdapter(dataForHeader);
+      mRecycler.setAdapter(adapter);
+
+      findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            adapter.setEditMode(true);
+         }
+      });
+
+      findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            adapter.setEditMode(false);
+         }
+      });
+
+      findViewById(R.id.select_all).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            adapter.selectAllItems();
+         }
+      });
+
+      findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            adapter.deleteSelectedItems();
+         }
+      });
+
    }
 
    @Override
