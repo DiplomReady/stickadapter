@@ -13,7 +13,6 @@ import com.codewaves.sample.R;
 import com.codewaves.stickyheadergrid.StickyHeaderAdapter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class SampleAdapter extends StickyHeaderAdapter {
@@ -25,29 +24,7 @@ public class SampleAdapter extends StickyHeaderAdapter {
     }
 
     private void addItemsToSection(List<TvSection> data) {
-
-        /*for (Iterator<TvItem> tvItem = data.iterator(); tvItem.hasNext(); ) {
-
-            TvItem nextItem = tvItem.next();
-            if (nextItem.isNeedsDelete()) {
-                tvItem.remove();
-            }
-
-        }*/
-
-        tvItemSSections = new ArrayList<>(data.size());
-
-        for (int s = 0; s < data.size(); ++s) {
-//            List<TvItem> tvItems = new ArrayList<>(data.get(s).getItemsCount());
-            for (int i = 0; i < data.get(s).getItemsCount(); ++i) {
-                for (TvItem tvItem : data.get(i).getTvItems()) {
-                    String label = "Item " + String.valueOf(i);
-                    tvItem.setTitle(label);
-//                    tvItems.add(tvItem);
-                }
-            }
-            this.tvItemSSections.addAll(data);
-        }
+        tvItemSSections = new ArrayList<>(data);
     }
 
     @Override
@@ -145,8 +122,7 @@ public class SampleAdapter extends StickyHeaderAdapter {
             List<TvItem> newTvItems = new ArrayList<>();
 
             for (TvItem tvItem : tvItemSSection.getTvItems()) {
-                tvItem.setNeedsDelete(tvItem.isSelected());
-                if (!tvItem.isNeedsDelete()) {
+                if (!tvItem.isSelected()) {
                     newTvItems.add(tvItem);
                 }
             }
@@ -158,30 +134,8 @@ public class SampleAdapter extends StickyHeaderAdapter {
 
         }
 
-     /*  for (Iterator<List<TvItem>> tvItemSSection = tvItemSSections.iterator(); tvItemSSection.hasNext(); ) {
-
-           List<TvItem> tvItems = tvItemSSection.next();
-
-
-           for (Iterator<TvItem> tvItem = tvItems.iterator(); tvItem.hasNext(); ) {
-
-
-               TvItem nextItem = tvItem.next();
-               if (nextItem.isSelected()) {
-                   tvItems.remove(nextItem);
-               }
-
-               if (tvItems.isEmpty()) {
-                   tvItemSSections.remove(tvItems);
-                   break;
-               }
-               //           tvItem.setNeedsDelete(tvItem.isSelected());
-           }
-       }*/
-
         addItemsToSection(newTvSections);
         recalculateItems();
-        //       notifyDataSetChanged();
     }
 
     public static class MyHeaderViewHolder extends HeaderViewHolder {

@@ -63,16 +63,16 @@ public class SampleActivity extends AppCompatActivity {
 //      mRecycler.addItemDecoration(new DividerItemDecoration(this, R.drawable.divider));
 
       List<TvSection> dataForHeader = new ArrayList<>();
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(2)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(6)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(1)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(2)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(5)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(1)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(3)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(9)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(4)));
-      dataForHeader.add(new TvSection(new ArrayList<TvItem>(1)));
+      dataForHeader.add(new TvSection(2));
+      dataForHeader.add(new TvSection(6));
+      dataForHeader.add(new TvSection(1));
+      dataForHeader.add(new TvSection(2));
+      dataForHeader.add(new TvSection(5));
+      dataForHeader.add(new TvSection(1));
+      dataForHeader.add(new TvSection(3));
+      dataForHeader.add(new TvSection(9));
+      dataForHeader.add(new TvSection(4));
+      dataForHeader.add(new TvSection(1));
       final SampleAdapter adapter = new SampleAdapter(dataForHeader);
       mRecycler.setAdapter(adapter);
 

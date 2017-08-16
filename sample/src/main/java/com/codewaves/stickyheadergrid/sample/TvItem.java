@@ -9,8 +9,8 @@ public class TvItem {
     private boolean isNeedsDelete;
     private String title;
 
-    public TvItem(int listingCount) {
-        this.listingCount = listingCount;
+    public TvItem(String title) {
+        this.title = title;
     }
 
     public String getTitle() {
