@@ -55,7 +55,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="200dp"
         android:visibility="visible"
-
         android:background="@android:color/darker_gray" />
 
 
