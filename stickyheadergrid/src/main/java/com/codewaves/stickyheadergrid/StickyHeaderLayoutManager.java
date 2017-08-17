@@ -501,6 +501,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
                 v.setPadding(DEPHAULT_PADDING, DEPHAULT_PADDING, DEPHAULT_PADDING, DEPHAULT_PADDING);
             }
 
+            params.width = getWidth();
             v.setLayoutParams(params);
             addView(v, mHeadersStartPosition);
             mHeadersStartPosition++;
@@ -569,6 +570,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
                 v.setPadding(DEPHAULT_PADDING, DEPHAULT_PADDING, DEPHAULT_PADDING, DEPHAULT_PADDING);
             }
 
+            params.width = getWidth();
             v.setLayoutParams(params);
             addView(v, 0);
             mHeadersStartPosition++;
