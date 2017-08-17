@@ -1,7 +1,7 @@
 package com.codewaves.stickyheadergrid.sample;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -31,23 +31,6 @@ public class SampleActivity extends AppCompatActivity {
       mRecycler = (RecyclerView)findViewById(R.id.recycler);
       mLayoutManager = new StickyHeaderLayoutManager(SPAN_SIZE);
       mLayoutManager.setHeaderBottomOverlapMargin(getResources().getDimensionPixelSize(R.dimen.header_shadow_size));
-      mLayoutManager.setSpanSizeLookup(new StickyHeaderLayoutManager.SpanSizeLookup() {
-         @Override
-         public int getSpanSize(int section, int position) {
-            switch (section) {
-               case 0:
-                  return 3;
-               case 1:
-                  return 1;
-               case 2:
-                  return 3 - position % 3;
-               case 3:
-                  return position % 2 + 1;
-               default:
-                  return 1;
-            }
-         }
-      });
 
       // Workaround RecyclerView limitation when playing remove animations. RecyclerView always
       // puts the removed item on the top of other views and it will be drawn above sticky header.
@@ -63,16 +46,16 @@ public class SampleActivity extends AppCompatActivity {
 //      mRecycler.addItemDecoration(new DividerItemDecoration(this, R.drawable.divider));
 
       List<TvSection> dataForHeader = new ArrayList<>();
-      dataForHeader.add(new TvSection(2));
-      dataForHeader.add(new TvSection(6));
-      dataForHeader.add(new TvSection(1));
-      dataForHeader.add(new TvSection(2));
-      dataForHeader.add(new TvSection(5));
-      dataForHeader.add(new TvSection(1));
-      dataForHeader.add(new TvSection(3));
-      dataForHeader.add(new TvSection(9));
-      dataForHeader.add(new TvSection(4));
-      dataForHeader.add(new TvSection(1));
+      dataForHeader.add(new TvSection("1", 2));
+      dataForHeader.add(new TvSection("2", 6));
+      dataForHeader.add(new TvSection("3", 1));
+      dataForHeader.add(new TvSection("4", 2));
+      dataForHeader.add(new TvSection("5", 5));
+      dataForHeader.add(new TvSection("6", 1));
+      dataForHeader.add(new TvSection("7", 3));
+      dataForHeader.add(new TvSection("8", 9));
+      dataForHeader.add(new TvSection("9", 4));
+      dataForHeader.add(new TvSection("10", 1));
       final SampleAdapter adapter = new SampleAdapter(dataForHeader);
       mRecycler.setAdapter(adapter);
 
@@ -115,6 +98,7 @@ public class SampleActivity extends AppCompatActivity {
    @Override
    public boolean onOptionsItemSelected(MenuItem item) {
       int id = item.getItemId();
+
       switch (id) {
          case R.id.action_top:
             mRecycler.scrollToPosition(0);
@@ -135,7 +119,7 @@ public class SampleActivity extends AppCompatActivity {
             mRecycler.smoothScrollToPosition(mRecycler.getAdapter().getItemCount() - 1);
             break;
       }
-      return super.onOptionsItemSelected(item);
 
+      return super.onOptionsItemSelected(item);
    }
 }

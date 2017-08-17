@@ -38,7 +38,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
     private HeaderStateChangeListener mHeaderStateListener;
     private int mStickyHeaderSection = NO_POSITION;
     private View mStickyHeaderView;
-    private HeaderState mStickyHeadeState;
+    private HeaderState mStickyHeaderState;
     private View mFillViewSet[];
     private SavedState mPendingSavedState;
     private int mPendingScrollPosition = NO_POSITION;
@@ -242,9 +242,11 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
 
         mPendingScrollPosition = position;
         mPendingScrollPositionOffset = 0;
+
         if (mPendingSavedState != null) {
             mPendingSavedState.invalidateAnchor();
         }
+
         requestLayout();
     }
 
@@ -262,6 +264,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
             @Override
             public int calculateDyToMakeVisible(View view, int snapPreference) {
                 final RecyclerView.LayoutManager layoutManager = getLayoutManager();
+
                 if (layoutManager == null || !layoutManager.canScrollVertically()) {
                     return 0;
                 }
@@ -272,6 +275,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
                 final int bottom = layoutManager.getDecoratedBottom(view);
                 final int start = layoutManager.getPaddingTop() + topOffset;
                 final int end = layoutManager.getHeight() - layoutManager.getPaddingBottom();
+
                 return calculateDtToFit(top, bottom, start, end, snapPreference);
             }
         };
@@ -323,6 +327,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
         if (mAdapter == null || state.getItemCount() == 0) {
             removeAndRecycleAllViews(recycler);
             clearState();
+
             return;
         }
 
@@ -337,7 +342,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
             pendingAdapterOffset = mPendingSavedState.mAnchorOffset;
             mPendingSavedState = null;
         } else {
-            pendingAdapterPosition = getAdapterPositionFromAnchor(mAnchor);
+            pendingAdapterPosition = getFirstVisibleHeaderPosition(true) == 0 ? 0 : getAdapterPositionFromAnchor(mAnchor);
             pendingAdapterOffset = mAnchor.offset;
         }
 
@@ -987,10 +992,10 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
             onHeaderUnstick();
         }
 
-        final boolean headerStateChanged = mStickyHeaderSection != section || !mStickyHeadeState.equals(state) || state.equals(HeaderState.PUSHED);
+        final boolean headerStateChanged = mStickyHeaderSection != section || !mStickyHeaderState.equals(state) || state.equals(HeaderState.PUSHED);
         mStickyHeaderSection = section;
         mStickyHeaderView = view;
-        mStickyHeadeState = state;
+        mStickyHeaderState = state;
 
         if (headerStateChanged && mHeaderStateListener != null) {
             mHeaderStateListener.onHeaderStateChanged(section, view, state, pushOffset);
@@ -1005,7 +1010,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
 
             mStickyHeaderSection = NO_POSITION;
             mStickyHeaderView = null;
-            mStickyHeadeState = HeaderState.NORMAL;
+            mStickyHeaderState = HeaderState.NORMAL;
         }
     }
 
@@ -1111,7 +1116,7 @@ public class StickyHeaderLayoutManager extends RecyclerView.LayoutManager implem
 
             mStickyHeaderSection = NO_POSITION;
             mStickyHeaderView = null;
-            mStickyHeadeState = HeaderState.NORMAL;
+            mStickyHeaderState = HeaderState.NORMAL;
         }
     }
 

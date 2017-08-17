@@ -1,6 +1,5 @@
 package com.codewaves.stickyheadergrid.sample;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import java.util.List;
 
 public class SampleAdapter extends StickyHeaderAdapter {
     private List<TvSection> tvItemSSections;
-    private boolean editMode;
 
     SampleAdapter(List<TvSection> data) {
         addItemsToSection(data);
@@ -52,7 +50,7 @@ public class SampleAdapter extends StickyHeaderAdapter {
     @Override
     public void onBindHeaderViewHolder(HeaderViewHolder viewHolder, int section) {
         final MyHeaderViewHolder holder = (MyHeaderViewHolder) viewHolder;
-        final String label = "Header Number " + section;
+        final String label = "Header Number " + tvItemSSections.get(section).getTitle();
         holder.labelView.setText(label);
     }
 
@@ -77,14 +75,9 @@ public class SampleAdapter extends StickyHeaderAdapter {
             }
         });
 
-     /* if (tvItem.isNeedsDelete()) {
-         deleteItem(holder, tvItem);
-      }*/
-
     }
 
     private void deleteItem(MyItemViewHolder holder, TvItem tvItem) {
-        Log.i("***", "deleteItem: ");
         final int section = getAdapterPositionSection(holder.getAdapterPosition());
         final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
 
@@ -128,10 +121,9 @@ public class SampleAdapter extends StickyHeaderAdapter {
             }
 
             if (!newTvItems.isEmpty()) {
-                TvSection newTvItemSSection = new TvSection(newTvItems);
+                TvSection newTvItemSSection = new TvSection(tvItemSSection.getTitle(), newTvItems);
                 newTvSections.add(newTvItemSSection);
             }
-
         }
 
         addItemsToSection(newTvSections);
@@ -143,6 +135,7 @@ public class SampleAdapter extends StickyHeaderAdapter {
 
         MyHeaderViewHolder(View itemView) {
             super(itemView);
+
             labelView = (TextView) itemView.findViewById(R.id.label);
         }
     }
@@ -153,6 +146,7 @@ public class SampleAdapter extends StickyHeaderAdapter {
 
         MyItemViewHolder(View itemView) {
             super(itemView);
+
             labelView = (TextView) itemView.findViewById(R.id.label);
             checkView = (CheckBox) itemView.findViewById(R.id.check);
         }
